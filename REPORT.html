@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Credit Risk Evaluator - Technical Report</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #fff;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1a1a1a;
+        border-bottom: 2px solid #eaeaea;
+        padding-bottom: 10px;
+      }
+      h1 {
+        font-size: 2.2em;
+        text-align: center;
+        border-bottom: none;
+        margin-bottom: 5px;
+      }
+      .subtitle {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        margin-bottom: 40px;
+      }
+      .divider {
+        height: 1px;
+        background: #ddd;
+        margin: 40px 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f9f9f9;
+      }
+      .highlight {
+        font-weight: bold;
+        color: #2e7d32;
+      }
+      code {
+        background: #f4f4f4;
+        padding: 2px 5px;
+        border-radius: 3px;
+      }
+      @media print {
+        body {
+          padding: 0;
+          margin: 20mm;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="no-print"
+      style="
+        background: #fff8e1;
+        padding: 15px;
+        border: 1px solid #ffe082;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        text-align: center;
+      "
+    >
+      <strong>Quick PDF Tip:</strong> Press <code>Ctrl + P</code> (or Cmd + P on
+      Mac) and select <strong>"Save as PDF"</strong> to generate your report.
+    </div>
+
+    <h1>Credit Risk Prediction Using Decision Tree Classification</h1>
+    <p class="subtitle">
+      GenAI Capstone Project Report &bull; NST Sonipat &bull; February 2026
+    </p>
+
+    <h2>1. Problem Statement</h2>
+    <p>
+      Access to credit is a fundamental enabler of economic participation, yet
+      lending institutions face the persistent challenge of distinguishing
+      creditworthy borrowers from those likely to default. Inaccurate risk
+      assessments lead to significant financial losses through non-performing
+      assets or, conversely, the denial of credit to deserving applicants.
+    </p>
+    <p>
+      This project addresses the
+      <strong
+        >binary classification problem of predicting loan default risk</strong
+      >. Given a set of applicant and loan attributes, the goal is to build a
+      supervised machine learning model that can predict whether a borrower will
+      default on a loan (<code>loan_status = 1</code>) or repay successfully
+      (<code>loan_status = 0</code>).
+    </p>
+
+    <h2>2. Data Description</h2>
+    <p>
+      The dataset is a publicly available credit risk dataset containing
+      <strong>32,581 records</strong> of historical loan applications.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>person_age</code></td>
+          <td>Age of the applicant</td>
+        </tr>
+        <tr>
+          <td><code>person_income</code></td>
+          <td>Annual income</td>
+        </tr>
+        <tr>
+          <td><code>person_emp_length</code></td>
+          <td>Employment length in years</td>
+        </tr>
+        <tr>
+          <td><code>loan_grade</code></td>
+          <td>Credit grade assigned (A–G)</td>
+        </tr>
+        <tr>
+          <td><code>loan_amnt</code></td>
+          <td>Loan amount requested</td>
+        </tr>
+        <tr>
+          <td><code>loan_int_rate</code></td>
+          <td>Interest rate on the loan</td>
+        </tr>
+        <tr>
+          <td><code>loan_percent_income</code></td>
+          <td>Loan amount as % of annual income</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Exploratory Data Analysis (EDA)</h2>
+    <ul>
+      <li>
+        <strong>Loan-to-Income Ratio:</strong> Borrowers with high
+        loan-to-income ratios show significantly higher default risk.
+      </li>
+      <li>
+        <strong>Interest Rates:</strong> Defaulters are concentrated in higher
+        interest rate brackets, typically associated with lower loan grades.
+      </li>
+      <li>
+        <strong>Loan Grades:</strong> Default rates increase progressively from
+        Grade A to Grade G.
+      </li>
+    </ul>
+
+    <h2>4. Methodology</h2>
+    <p>
+      We utilized a <strong>Decision Tree Classifier</strong> as the primary
+      algorithm. Key preprocessing steps included median imputation for missing
+      values, ordinal encoding for loan grades, and normalization via
+      <code>StandardScaler</code>.
+    </p>
+
+    <h2>5. Evaluation</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Decision Tree Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Accuracy</td>
+          <td class="highlight">90.81%</td>
+        </tr>
+        <tr>
+          <td>ROC-AUC</td>
+          <td>0.6817</td>
+        </tr>
+        <tr>
+          <td>Recall (Default)</td>
+          <td>0.77</td>
+        </tr>
+        <tr>
+          <td>Precision (Default)</td>
+          <td>0.81</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>6. Team Contribution</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Member</th>
+          <th>Contribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Palak</strong></td>
+          <td>Data preprocessing, EDA, model training & evaluation</td>
+        </tr>
+        <tr>
+          <td><strong>Samarth</strong></td>
+          <td>
+            Streamlit application development, UI/UX optimization, Deployment
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+    <p style="text-align: center; color: #888; font-size: 0.9em">
+      Live Application:
+      <a href="https://genaicapstone-a7eipdbqudn2niewt9s2mp.streamlit.app/"
+        >genaicapstone-streamlit.app</a
+      >
+    </p>
+  </body>
+</html>

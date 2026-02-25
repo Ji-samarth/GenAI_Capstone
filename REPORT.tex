@@ -1,0 +1,116 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+% Define colors
+\definecolor{primary}{RGB}{26, 26, 26}
+\definecolor{accent}{RGB}{46, 125, 50}
+
+% Title styling
+\titleformat{\section}{\large\bfseries\color{primary}}{\thesection}{1em}{}[{\titlerule[0.5pt]}]
+\titleformat{\subsection}{\bfseries\color{primary}}{\thesubsection}{1em}{}
+
+\title{
+    \vspace{-2cm}
+    \textbf{\Large Credit Risk Prediction Using Decision Tree Classification}\\
+    \large\textit{GenAI Capstone Project Report}\\
+    \small NST Sonipat
+}
+\author{Team Palak \& Samarth}
+\date{February 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem Statement}
+Access to credit is a fundamental enabler of economic participation, yet lending institutions face the persistent challenge of distinguishing creditworthy borrowers from those likely to default. Inaccurate risk assessments lead to significant financial losses through non-performing assets or, conversely, the denial of credit to deserving applicants.
+
+This project addresses the \textbf{binary classification problem of predicting loan default risk}. Given a set of applicant and loan attributes, the goal is to build a supervised machine learning model that predicts whether a borrower will default on a loan (\texttt{loan\_status = 1}) or repay successfully (\texttt{loan\_status = 0}).
+
+\section{Data Description}
+The dataset contains \textbf{32,581 records} of historical loan applications.
+
+\subsection{Features}
+\begin{itemize}[noitemsep]
+    \item \textbf{person\_age}: Age of the applicant
+    \item \textbf{person\_income}: Annual income
+    \item \textbf{person\_emp\_length}: Employment length in years
+    \item \textbf{person\_home\_ownership}: Home ownership status
+    \item \textbf{loan\_intent}: Purpose of loan
+    \item \textbf{loan\_grade}: Credit grade (A--G)
+    \item \textbf{loan\_amnt}: Loan amount requested
+    \item \textbf{loan\_int\_rate}: Interest rate
+    \item \textbf{loan\_percent\_income}: Loan amount as \% of annual income
+    \item \textbf{cb\_person\_default\_on\_file}: Previous default record (Y/N)
+    \item \textbf{cb\_person\_cred\_hist\_length}: Credit history length
+\end{itemize}
+
+\section{Exploratory Data Analysis (EDA)}
+Key findings from the analysis:
+\begin{itemize}
+    \item \textbf{Loan-to-Income Ratio:} Borrowers with high loan-to-income ratios show a significantly higher default frequency.
+    \item \textbf{Interest Rates:} Defaulters are concentrated in higher interest rate brackets.
+    \item \textbf{Loan Grades:} Default rates increase progressively from Grade A to Grade G.
+\end{itemize}
+
+\section{Methodology}
+\subsection{Data Preprocessing}
+1. \textbf{Imputation:} Median imputation for missing values in employment length and interest rate.
+2. \textbf{Mapping:} Ordinal encoding for loan grades (A=1, B=2, etc.).
+3. \textbf{Encoding:} One-hot encoding for categorical variables with \texttt{drop\_first=True}.
+4. \textbf{Scaling:} Feature normalization using \texttt{StandardScaler}.
+
+\subsection{Model Selection}
+The \textbf{Decision Tree Classifier} was selected for the following reasons:
+\begin{itemize}
+    \item \textbf{Accuracy:} 90.81\% overall accuracy.
+    \item \textbf{Balance:} Effective handling of class imbalance using \texttt{class\_weight='balanced'}.
+    \item \textbf{Interpretability:} Clear mapping of features like income and loan amount to risk decisions.
+\end{itemize}
+
+\section{Evaluation}
+\subsection{Model Comparison}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Metric & Logistic Regression & \textbf{Decision Tree} \\ \midrule
+Accuracy & 84.52\% & 90.81\% \\
+ROC-AUC & 0.8636 & 0.6817 \\ \bottomrule
+\end{tabular}
+
+\subsection{Decision Tree Results}
+\begin{itemize}
+    \item \textbf{Recall (Default):} 0.77 (Identifies 77\% of actual defaulters).
+    \item \textbf{Precision (Default):} 0.81.
+    \item \textbf{F1-Score (Default):} 0.79.
+\end{itemize}
+
+\section{Optimization}
+Optimization steps included:
+\begin{itemize}
+    \item Applying tree pruning (\texttt{max\_depth=10}) to prevent overfitting.
+    \item Using class weights to address the 78/22 imbalance.
+    \item Engineering the loan-to-income ratio as a primary risk indicator.
+\end{itemize}
+
+\section{Team Contribution}
+\begin{table}[h]
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Member} & \textbf{Contribution} \\ \midrule
+Palak & Data preprocessing, EDA, model training \& evaluation \\
+Samarth & Streamlit app development, Deployment, UI/UX optimization \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\section{Deployment}
+The application is live at: \\
+\url{https://genaicapstone-a7eipdbqudn2niewt9s2mp.streamlit.app/}
+
+\end{document}
