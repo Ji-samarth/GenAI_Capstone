@@ -16,20 +16,106 @@ st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
 
+/* ── Theme-aware CSS variables ────────────────────────────── */
+:root {
+    --bg-page: #f7f7f5;
+    --bg-card: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666;
+    --text-muted: #888;
+    --text-faint: #aaa;
+    --border-color: #e0e0e0;
+    --input-border: #ddd;
+    --input-bg: #fff;
+    --btn-bg: #1a1a1a;
+    --btn-text: #f7f7f5;
+    --btn-hover: #333;
+    --approved-bg: #f0faf0;
+    --approved-border: #4caf50;
+    --approved-text: #2e7d32;
+    --review-bg: #fffbf0;
+    --review-border: #ff9800;
+    --review-text: #e65100;
+    --rejected-bg: #fff0f0;
+    --rejected-border: #f44336;
+    --rejected-text: #c62828;
+}
+
+/* Dark mode overrides — works with Streamlit's theme switcher */
+@media (prefers-color-scheme: dark) {
+    :root { color-scheme: dark; }
+}
+
+[data-testid="stAppViewContainer"][data-theme="dark"],
+[data-testid="stApp"][style*="dark"],
+:root:has([data-testid="stAppViewContainer"][class*="dark"]) {
+    --bg-page: #0e1117;
+    --bg-card: #1a1d24;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #909090;
+    --text-faint: #707070;
+    --border-color: #333;
+    --input-border: #444;
+    --input-bg: #1a1d24;
+    --btn-bg: #f7f7f5;
+    --btn-text: #0e1117;
+    --btn-hover: #d0d0d0;
+    --approved-bg: #1a2e1a;
+    --approved-border: #4caf50;
+    --approved-text: #81c784;
+    --review-bg: #2e2a1a;
+    --review-border: #ff9800;
+    --review-text: #ffb74d;
+    --rejected-bg: #2e1a1a;
+    --rejected-border: #f44336;
+    --rejected-text: #ef9a9a;
+}
+
+/* Streamlit uses this attribute for dark mode */
+.stApp[data-testid="stApp"] {
+    --bg-page: var(--bg-page);
+}
+/* Detect dark via Streamlit's actual background */
+.stApp[style*="background-color: rgb(14, 17, 23)"],
+.stApp[style*="background-color: rgb(38, 39, 48)"] {
+    --bg-page: #0e1117;
+    --bg-card: #1a1d24;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #909090;
+    --text-faint: #707070;
+    --border-color: #333;
+    --input-border: #444;
+    --input-bg: #1a1d24;
+    --btn-bg: #f7f7f5;
+    --btn-text: #0e1117;
+    --btn-hover: #d0d0d0;
+    --approved-bg: #1a2e1a;
+    --approved-border: #4caf50;
+    --approved-text: #81c784;
+    --review-bg: #2e2a1a;
+    --review-border: #ff9800;
+    --review-text: #ffb74d;
+    --rejected-bg: #2e1a1a;
+    --rejected-border: #f44336;
+    --rejected-text: #ef9a9a;
+}
+
+/* ── Base styles ──────────────────────────────────────────── */
 html, body, [class*="css"] {
     font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #f7f7f5;
-    color: #1a1a1a;
+    color: var(--text-primary);
 }
 
 .block-container { padding: 2.5rem 2rem; max-width: 720px; }
 
 h1 { font-family: 'IBM Plex Mono', monospace; font-size: 1.5rem; font-weight: 500; letter-spacing: -0.5px; margin-bottom: 0; }
-h3 { font-size: 0.8rem; font-weight: 400; color: #888; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e0e0e0; padding-bottom: 6px; }
+h3 { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
 
 .stButton > button {
-    background: #1a1a1a;
-    color: #f7f7f5;
+    background: var(--btn-bg);
+    color: var(--btn-text);
     border: none;
     border-radius: 4px;
     padding: 0.6rem 2rem;
@@ -41,16 +127,16 @@ h3 { font-size: 0.8rem; font-weight: 400; color: #888; text-transform: uppercase
     cursor: pointer;
     transition: background 0.15s;
 }
-.stButton > button:hover { background: #333; }
+.stButton > button:hover { background: var(--btn-hover); }
 
 .stSelectbox > div > div, .stNumberInput > div > div > input {
-    border: 1px solid #ddd !important;
+    border: 1px solid var(--input-border) !important;
     border-radius: 4px !important;
-    background: #fff !important;
     font-family: 'IBM Plex Sans', sans-serif !important;
     font-size: 0.9rem !important;
 }
 
+/* ── Result boxes ─────────────────────────────────────────── */
 .result-box {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -58,20 +144,21 @@ h3 { font-size: 0.8rem; font-weight: 400; color: #888; text-transform: uppercase
     text-align: center;
     border: 1.5px solid;
 }
-.approved   { background: #f0faf0; border-color: #4caf50; }
-.review     { background: #fffbf0; border-color: #ff9800; }
-.rejected   { background: #fff0f0; border-color: #f44336; }
+.approved   { background: var(--approved-bg); border-color: var(--approved-border); color: var(--approved-text); }
+.review     { background: var(--review-bg); border-color: var(--review-border); color: var(--review-text); }
+.rejected   { background: var(--rejected-bg); border-color: var(--rejected-border); color: var(--rejected-text); }
 
 .result-label { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; font-weight: 500; margin-bottom: 4px; }
-.result-prob  { font-size: 0.85rem; color: #666; }
+.result-prob  { font-size: 0.85rem; color: var(--text-secondary); }
 
+/* ── Metric boxes ─────────────────────────────────────────── */
 .metric-row { display: flex; gap: 1rem; margin-top: 1rem; }
-.metric-box { flex: 1; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 1rem; text-align: center; }
-.metric-val { font-family: 'IBM Plex Mono', monospace; font-size: 1.3rem; font-weight: 500; }
-.metric-lbl { font-size: 0.75rem; color: #888; margin-top: 2px; }
+.metric-box { flex: 1; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; text-align: center; }
+.metric-val { font-family: 'IBM Plex Mono', monospace; font-size: 1.3rem; font-weight: 500; color: var(--text-primary); }
+.metric-lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
 
-.divider { height: 1px; background: #e0e0e0; margin: 1.5rem 0; }
-.note { font-size: 0.78rem; color: #aaa; margin-top: 0.5rem; }
+.divider { height: 1px; background: var(--border-color); margin: 1.5rem 0; }
+.note { font-size: 0.78rem; color: var(--text-faint); margin-top: 0.5rem; }
 
 footer { visibility: hidden; }
 #MainMenu { visibility: hidden; }
