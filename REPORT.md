@@ -209,7 +209,45 @@ The model is deployed as a **Streamlit web application** accessible at:
 
 ---
 
-## 10. References
+### 11. System Architecture
+
+The following diagram illustrates the end-to-end data flow and system components:
+
+```mermaid
+graph TD
+    A[Borrower Data / CSV] --> B[Data Preprocessing]
+    B --> C[Scaling & Encoding]
+    C --> D[ML Model: Decision Tree]
+    D --> E[Risk Score / Prediction]
+    E --> F[Interactive UI: Streamlit]
+    F --> G[End User]
+```
+
+### 12. Input–Output Specification
+
+#### Input Specification
+
+- **Format:** CSV or Manual Form Entry
+- **Key Features:** `person_income` (Total Annual Income), `person_age` (Age in Years), `loan_amnt` (Loan Amount Required), `cb_person_default_on_file` (Historical Default Flag).
+
+#### Output Specification
+
+- **Response:** Probability Score (0.0 to 1.0)
+- **Classification:** Binary (Approved / Needs Review / Rejected)
+- **Key Metrics:** Default Probability %, Repayment Likelihood %, Assigned Loan Grade.
+
+### 13. Key Risk Drivers (Feature Importance)
+
+Based on the Decision Tree analysis, the following features are the primary "drivers" of credit risk in this project:
+
+1. **Loan Percent Income:** The ratio of loan amount to total income is the most significant indicator of default. Higher ratios directly correlate with higher risk scores.
+2. **Loan Grade:** The credit grade assigned to the loan shows a strong monotonic trend with default likelihood.
+3. **Interest Rate:** Higher interest rates (associated with higher risk loans) are a major predictive driver.
+4. **Income:** Lower annual income records show a statistically higher frequency of non-repayment.
+
+---
+
+## 14. References
 
 1. scikit-learn Documentation — [https://scikit-learn.org/stable/](https://scikit-learn.org/stable/)
 2. Streamlit Documentation — [https://docs.streamlit.io/](https://docs.streamlit.io/)
