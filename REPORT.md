@@ -211,39 +211,71 @@ The model is deployed as a **Streamlit web application** accessible at:
 
 ### 11. System Architecture
 
-The following diagram illustrates the end-to-end data flow and system components:
+To understand how the Credit Risk Evaluator functions, we can visualize the system in three distinct layers:
 
 ```mermaid
-graph TD
-    A[Borrower Data / CSV] --> B[Data Preprocessing]
-    B --> C[Scaling & Encoding]
-    C --> D[ML Model: Decision Tree]
-    D --> E[Risk Score / Prediction]
-    E --> F[Interactive UI: Streamlit]
-    F --> G[End User]
+graph LR
+    subgraph "Layer 1: User Interface (Streamlit)"
+        A[Applicant Form] --> B[Input Validation]
+    end
+
+    subgraph "Layer 2: Intelligence (Python/Scikit-Learn)"
+        B --> C[Preprocessing & Scaling]
+        C --> D{Decision Tree Model}
+        D --> E[Risk Score Calculation]
+    end
+
+    subgraph "Layer 3: Output Display"
+        E --> F[Risk Category: Approved/Rejected]
+        E --> G[Visual Metrics & Likelihood]
+    end
+
+    style D fill:#f96,stroke:#333,stroke-width:2px
+    style A fill:#bbf,stroke:#333
+    style F fill:#9f9,stroke:#333
+    style G fill:#9f9,stroke:#333
 ```
+
+#### The "Data Journey":
+
+1.  **Input:** User provides details (Income, Age, etc.) via the web form.
+2.  **Transformation:** The app cleans the data and scales it to match the model's training requirements.
+3.  **Prediction:** The Decision Tree evaluates the specific "path" for the borrower to calculate a default probability.
+4.  **Action:** The app categorizes the result and displays a visual decision dashboard.
 
 ### 12. Input–Output Specification
 
-#### Input Specification
+This section defines exactly what data enters the system and what information is produced.
 
-- **Format:** CSV or Manual Form Entry
-- **Key Features:** `person_income` (Total Annual Income), `person_age` (Age in Years), `loan_amnt` (Loan Amount Required), `cb_person_default_on_file` (Historical Default Flag).
+#### 📥 System Inputs (Borrower Profile)
 
-#### Output Specification
+| Input Category   | Key Features                               | Purpose                                         |
+| :--------------- | :----------------------------------------- | :---------------------------------------------- |
+| **Demographics** | `Age`, `Employment Length`                 | Assess stability and life-stage.                |
+| **Financials**   | `Annual Income`, `Loan Amount`             | Calculate the primary **Loan-to-Income** ratio. |
+| **History**      | `Default History`, `Credit History Length` | Factor in past behavior and credit maturity.    |
+| **Context**      | `Home Ownership`, `Loan Purpose`           | Understand the context and collateral type.     |
 
-- **Response:** Probability Score (0.0 to 1.0)
-- **Classification:** Binary (Approved / Needs Review / Rejected)
-- **Key Metrics:** Default Probability %, Repayment Likelihood %, Assigned Loan Grade.
+#### 📤 System Outputs (Credit Decision)
 
-### 13. Key Risk Drivers (Feature Importance)
+| Result Type  | Output Detail             | Description                                                       |
+| :----------- | :------------------------ | :---------------------------------------------------------------- |
+| **Score**    | **Default Probability %** | The exact statistical risk of non-repayment.                      |
+| **Decision** | **Status Tier**           | One of: 🟢 **Approved**, 🟡 **Needs Review**, or 🔴 **Rejected**. |
+| **Metrics**  | **Repayment Likelihood**  | The inverse of risk, showing the confidence in repayment.         |
 
-Based on the Decision Tree analysis, the following features are the primary "drivers" of credit risk in this project:
+### 13. Key Risk Drivers (Ranked by Impact)
 
-1. **Loan Percent Income:** The ratio of loan amount to total income is the most significant indicator of default. Higher ratios directly correlate with higher risk scores.
-2. **Loan Grade:** The credit grade assigned to the loan shows a strong monotonic trend with default likelihood.
-3. **Interest Rate:** Higher interest rates (associated with higher risk loans) are a major predictive driver.
-4. **Income:** Lower annual income records show a statistically higher frequency of non-repayment.
+The Decision Tree model "thinks" by prioritizing specific features. Below are the most influential drivers that determine the final risk score, ranked from most to least critical:
+
+1.  🏆 **Loan-to-Income Ratio (`loan_percent_income`)**
+    - _Why:_ This is the single biggest predictor. High debt relative to income is the "fast track" to a rejection.
+2.  📈 **Interest Rate (`loan_int_rate`)**
+    - _Why:_ High rates are typically assigned by lenders to high-risk profiles. The model uses this as a strong signal of existing risk.
+3.  🎖️ **Loan Grade (`loan_grade`)**
+    - _Why:_ A summary metric of the borrower's overall quality. Grades E, F, and G carry heavy penalties in the logic.
+4.  💼 **Annual Income (`person_income`)**
+    - _Why:_ Acts as the baseline for affordability. Even with low debt, extremely low income keeps the risk score high.
 
 ---
 

@@ -150,24 +150,42 @@ def generate_full_pdf():
 
     # 7. System Architecture
     pdf.chapter_title('7. System Architecture')
-    pdf.chapter_body("Data Flow: [Borrower Data/CSV] -> [Data Preprocessing] -> [Scaling & Encoding] -> [ML Model: Decision Tree] -> [Risk Score / Prediction] -> [Interactive UI: Streamlit]")
-    pdf.ln(5)
+    pdf.chapter_body("The system is structured into three functional layers:")
+    pdf.bullet_point("Layer 1: User Interface (Streamlit) - Handles applicant forms and input validation.")
+    pdf.bullet_point("Layer 2: Intelligence (Python/Scikit-Learn) - Manages preprocessing, scaling, and the Decision Tree model logic.")
+    pdf.bullet_point("Layer 3: Output Display - Visualizes risk metrics, tier status, and probability scores.")
+    pdf.ln(2)
+    pdf.set_font('helvetica', 'B', 11)
+    pdf.cell(0, 8, "The 'Data Journey':", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.chapter_body("1. Input: User provides details via the web form.\n2. Transformation: Data is cleaned and scaled for the model.\n3. Prediction: Decision Tree calculates default probability.\n4. Action: Result is categorized and displayed on the dashboard.")
 
     # 8. Input-Output Specification
     pdf.chapter_title('8. Input-Output Specification')
     pdf.set_font('helvetica', 'B', 11)
-    pdf.cell(0, 8, "Input Specification:", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-    pdf.chapter_body("Format: CSV or Manual Form Entry. Key features: Annual Income, Age, Loan Amount, and Historical Default records.")
-    pdf.set_font('helvetica', 'B', 11)
-    pdf.cell(0, 8, "Output Specification:", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
-    pdf.chapter_body("Result: Probability Score (0.0 to 1.0) and Classification (Approved / Needs Review / Rejected). Includes Default Probability % and repayment likelihood.")
+    pdf.cell(0, 8, "System Inputs (Borrower Profile):", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    widths_io = [40, 60, 90]
+    pdf.table_header(["Category", "Key Features", "Purpose"], widths_io)
+    pdf.table_row(["Demographics", "Age, Emp Length", "Assess stability/life-stage"], widths_io)
+    pdf.table_row(["Financials", "Income, Loan Amnt", "Calculate Loan-to-Income"], widths_io)
+    pdf.table_row(["History", "Default/Credit Hist", "Factor in past behavior"], widths_io)
+    pdf.table_row(["Context", "Home/Loan Purpose", "Collateral type/context"], widths_io)
+    pdf.ln(5)
 
-    # 9. Key Risk Drivers
-    pdf.chapter_title('9. Key Risk Drivers')
-    pdf.bullet_point("Loan Percent Income: Most significant indicator; higher ratios correlate with higher risk.")
-    pdf.bullet_point("Loan Grade: Strong monotonic trend from Grade A (lowest risk) to G (highest risk).")
-    pdf.bullet_point("Interest Rate: Higher rates are major predictive drivers of default likelihood.")
-    pdf.bullet_point("Income: Lower income levels show a statistically higher frequency of default.")
+    pdf.set_font('helvetica', 'B', 11)
+    pdf.cell(0, 8, "System Outputs (Credit Decision):", new_x=XPos.LMARGIN, new_y=YPos.NEXT)
+    pdf.table_header(["Result Type", "Output Detail", "Description"], widths_io)
+    pdf.table_row(["Score", "Default Prob %", "Statistical risk score"], widths_io)
+    pdf.table_row(["Decision", "Status Tier", "Approved / Review / Rejected"], widths_io)
+    pdf.table_row(["Metrics", "Repayment Likelihood", "Confidence in repayment"], widths_io)
+    pdf.ln(5)
+
+    # 9. Key Risk Drivers (Ranked by Impact)
+    pdf.chapter_title('9. Key Risk Drivers (Ranked by Impact)')
+    pdf.set_font('helvetica', 'B', 11)
+    pdf.chapter_body("1. Loan-to-Income Ratio: Single biggest predictor; high debt is a primary rejection trigger.")
+    pdf.chapter_body("2. Interest Rate: Strong signal of pre-existing risk profiles.")
+    pdf.chapter_body("3. Loan Grade: Summary quality metric; Grades E-G carry heavy penalties.")
+    pdf.chapter_body("4. Annual Income: Baseline affordability check; low income keeps risk high.")
 
     # 10. Deployment
     pdf.chapter_title('10. Deployment')
@@ -180,7 +198,7 @@ def generate_full_pdf():
     pdf.table_row(["Samarth", "App development, UI/UX design, deployment, bug fixes"], [60, 130])
 
     pdf.output("REPORT.pdf")
-    print("Full 100% Compliant REPORT.pdf generated successfully.")
+    print("Enhanced 100% Compliant REPORT.pdf generated successfully.")
 
 if __name__ == "__main__":
     generate_full_pdf()
