@@ -209,7 +209,7 @@ The model is deployed as a **Streamlit web application** accessible at:
 
 ---
 
-### 11. System Architecture
+## 10. System Architecture
 
 To understand how the Credit Risk Evaluator functions, we can visualize the system in three distinct layers:
 
@@ -243,7 +243,7 @@ graph LR
 3.  **Prediction:** The Decision Tree evaluates the specific "path" for the borrower to calculate a default probability.
 4.  **Action:** The app categorizes the result and displays a visual decision dashboard.
 
-### 12. Input–Output Specification
+## 11. Input–Output Specification
 
 This section defines exactly what data enters the system and what information is produced.
 
@@ -264,7 +264,7 @@ This section defines exactly what data enters the system and what information is
 | **Decision** | **Status Tier**           | One of: 🟢 **Approved**, 🟡 **Needs Review**, or 🔴 **Rejected**. |
 | **Metrics**  | **Repayment Likelihood**  | The inverse of risk, showing the confidence in repayment.         |
 
-### 13. Key Risk Drivers (Ranked by Impact)
+## 12. Key Risk Drivers (Ranked by Impact)
 
 The Decision Tree model "thinks" by prioritizing specific features. Below are the most influential drivers that determine the final risk score, ranked from most to least critical:
 
@@ -279,7 +279,7 @@ The Decision Tree model "thinks" by prioritizing specific features. Below are th
 
 ---
 
-## 14. References
+## 13. References
 
 1. scikit-learn Documentation — [https://scikit-learn.org/stable/](https://scikit-learn.org/stable/)
 2. Streamlit Documentation — [https://docs.streamlit.io/](https://docs.streamlit.io/)

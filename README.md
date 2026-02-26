@@ -71,7 +71,9 @@ GenAI_Capstone/
 ├── GenAI_Capstone.ipynb      # Jupyter notebook (EDA + model training)
 ├── credit_risk_dataset.csv   # Training dataset
 ├── requirements.txt          # Python dependencies
-├── REPORT.md                 # Full technical report
+├── REPORT.md                 # Full technical report (Markdown)
+├── REPORT.pdf                # Full technical report (PDF)
+├── create_pdf.py             # Script to regenerate REPORT.pdf
 └── README.md                 # This file
 ```
 
