@@ -97,10 +97,9 @@ streamlit run app.py
 
 ## Team
 
-| Member      | Contribution                                                           |
-| ----------- | ---------------------------------------------------------------------- |
-| **Palak**   | Dataset sourcing, data preprocessing, EDA, model training & evaluation |
-| **Samarth** | Streamlit app development, UI/UX design, deployment, bug fixes         |
+**Palak**   
+**Samarth** 
+**jashvitha**
 
 ---
 
