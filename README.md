@@ -99,7 +99,7 @@ streamlit run app.py
 
 **Palak**   
 **Samarth** 
-**jashvitha**
+**Jashvitha**
 
 ---
 
