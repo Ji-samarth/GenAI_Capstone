@@ -103,8 +103,10 @@ streamlit run app.py
 ---
 
 ## Team
-**Palak**   
+**Palak**  
+
 **Samarth** 
+
 **Jashvitha**
 
 ## Future Improvements
