@@ -63,6 +63,7 @@ Key features include: `person_age`, `person_income`, `person_emp_length`, `perso
 
 ---
 
+
 ## Project Structure
 
 ```
@@ -78,6 +79,12 @@ GenAI_Capstone/
 ```
 
 ---
+
+## Limitations
+
+- Binary default history (no partial defaults)
+- Moderate ROC-AUC suggests scope for probability calibration
+- Class imbalance handled via class weighting
 
 ## Run Locally
 
@@ -100,6 +107,13 @@ streamlit run app.py
 **Palak**   
 **Samarth** 
 **Jashvitha**
+
+## Future Improvements
+
+- Add probability calibration
+- Integrate SHAP for explainable AI
+- Add ensemble models (Random Forest, XGBoost)
+- Deploy REST API version
 
 ---
 
