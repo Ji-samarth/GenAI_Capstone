@@ -5,7 +5,6 @@ A machine learning-powered web application that predicts loan default risk using
 🔗 **Live App:** [https://genaicapstone-a7eipdbqudn2niewt9s2mp.streamlit.app/](https://genaicapstone-a7eipdbqudn2niewt9s2mp.streamlit.app/)
 
 ---
-
 ## Overview
 
 This project builds a **binary classification model** to predict whether a borrower will default on a loan. It takes applicant information (age, income, employment history) and loan details (amount, grade, interest rate, purpose) as inputs and outputs a risk assessment with default probability.
