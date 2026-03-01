@@ -105,7 +105,6 @@ streamlit run app.py
 ## Team
 **Palak**   
 **Samarth** 
-
 **Jashvitha**
 
 ## Future Improvements
